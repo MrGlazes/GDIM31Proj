@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+   [SerializeField] private TextMeshProUGUI scoreDisplay;
+    private int score;
     public float speed;
     public float jump;
+    private bool grounded;
 
     private float xDirection = 0f;
 
@@ -38,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
         //Detect if the key is pressed down.
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
         { //Detect if the key is pressed down.
 
             rb.AddForce(new Vector2(rb.velocity.x, jump));
@@ -77,5 +81,41 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy") 
+        {
+            SceneManager.LoadScene("MainMenu");
+            CameraController.Deactivate();
+        }
+
+        if (collision.gameObject.tag == "Ground")
+        {
+            grounded = true;
+        }
+        if (collision.gameObject.tag == "Finish")
+        {
+            SceneManager.LoadScene("MainMenu");
+            CameraController.Deactivate();
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            grounded = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Coin")
+        {
+            score += 100;
+            scoreDisplay.text = score.ToString();
+        }
+    }
+    
 
 }

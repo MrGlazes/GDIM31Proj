@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     {
         //Loads the scene named "Game" in our "ScenesInBuild"
         SceneManager.LoadScene("Game");
+        CameraController.Activate();
     }
 
     public void QuitGame()

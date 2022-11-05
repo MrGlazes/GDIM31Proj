@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     
     private void Update()
     {
+        //Checks if the game scene is in play. If not, and the player isnt spawned we get a swamp of the same error that player doesn't exist.
         if (!isActive)
         {
             return;
@@ -25,6 +26,7 @@ public class CameraController : MonoBehaviour
 
     }
 
+    //static so can be called without an object being instantiated. 
     public static void Activate()
     {
         isActive = true;

@@ -41,61 +41,28 @@ public class PlayerController : MonoBehaviour
         
 
         //Detect if the key is pressed down.
-
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
-        { //Detect if the key is pressed down.
-
+        { 
             rb.AddForce(new Vector2(rb.velocity.x, jump));
-
-        }
-
-    }
-
-    private void PlayerFacing()
-    {
-
-        MovementState playerState;
-
-        if (xDirection < 0f)
-        {
-            playerState = MovementState.running;
-            transform.eulerAngles = new Vector3(0, 180, 0);
-        }
-        else if (xDirection > 0f)
-        {
-            playerState = MovementState.running;
-            transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-        else
-        {
-            playerState = MovementState.idle;
-        }
-
-        if (rb.velocity.y > .1f)
-        {
-            playerState = MovementState.jumping;
-        }
-        else if (rb.velocity.y < -.1f)
-        {
-            playerState = MovementState.falling;
         }
 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy") 
-        {
+        if (collision.gameObject.tag == "Enemy")    //"Kills" the player and sends them back to menu by changing back to that scene.
+        {                                           //Will be changed when health system is added
             SceneManager.LoadScene("MainMenu");
             CameraController.Deactivate();
         }
 
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")   //Prevents spam jumping
         {
             grounded = true;
         }
-        if (collision.gameObject.tag == "Finish")
-        {
+
+        if (collision.gameObject.tag == "Finish")   //Similar to running into an enemy, will send player to menu.
+        {                                           //When new levels are created, will load next scene by index
             SceneManager.LoadScene("MainMenu");
             CameraController.Deactivate();
         }

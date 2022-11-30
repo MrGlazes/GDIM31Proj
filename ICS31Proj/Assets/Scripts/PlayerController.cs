@@ -45,6 +45,51 @@ public class PlayerController : MonoBehaviour
         { 
             rb.AddForce(new Vector2(rb.velocity.x, jump));
         }
+        
+        else if (rb.velocity.y > .1f)
+        {
+            anime.SetTrigger("Jump");
+            grounded = false;
+            anime.SetBool("Grounded", grounded);
+        }
+
+        else if (rb.velocity.y < -.1f)
+        {
+            anime.SetTrigger("Fall");
+        }
+
+        if (xDirection > 0)
+        {
+            anime.SetTrigger("Run");
+            GetComponent<SpriteRenderer>().flipX = false;
+            direction = 1;
+        }
+
+        else if (xDirection < 0)
+        {
+            anime.SetTrigger("Run");
+            GetComponent<SpriteRenderer>().flipX = true;
+            direction = -1;
+        }
+
+        else
+        {
+            anime.SetTrigger("Idle");
+        }
+        
+        if (rb.velocity.y == 0)
+        {
+            grounded = true;
+            anime.SetBool("isGrounded", grounded);
+        }
+
+        else
+        {
+            grounded = false;
+
+        }
+
+        anime.SetFloat("Speed", Mathf.Abs(xDirection));
 
     }
 

@@ -7,8 +7,16 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("Level", 1);
         //Loads the scene named "Game" in our "ScenesInBuild"
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene(PlayerPrefs.GetInt("Level"));
+        CameraController.Activate();
+    }
+    public void LoadGame()
+    {
+        //Loads the scene named "Game" in our "ScenesInBuild"
+        SceneManager.LoadScene(PlayerPrefs.GetInt("Level"));
         CameraController.Activate();
     }
 
